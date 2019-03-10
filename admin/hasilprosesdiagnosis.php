@@ -49,67 +49,71 @@
             <h6>Gejala - gejala yang anda pilih :</h6><br/>
             <div class="col-sm-7">
             <table class="table">
-            	<thead>
-            		<th>No</th>
-            		<th>Kode Gejala</th>
-            		<th>Nama Gejala</th>
-            	</thead>
+              <thead>
+                <th>No</th>
+                <th>Kode Gejala</th>
+                <th>Nama Gejala</th>
+              </thead>
 
-            	<tbody>
-                    <?php include '../function/connection.php'; ?>
-            		<?php $no = 1; ?>
-            		<?php $kdgejala = $_POST['oke']; ?>
-            		<?php foreach ($kdgejala as $tampil) { ?>
-            		<tr>
-            			<td><?php echo $no++; ?></td>
-            			<td><?php echo $tampil; ?></td>
-            			<?php $query = mysqli_query($connection, "SELECT * FROM tbl_gejala WHERE kd_gejala = '$tampil'"); ?>
-                  		<?php while($tampil1 = mysqli_fetch_array($query)){ ?>
-            			<td><?php echo $tampil1['nama_gejala']; ?></td>
-            			<?php } ?>
-            		</tr>
-            		<?php } ?>
-            	</tbody>
+              <tbody>
+                <?php include '../function/connection.php'; ?>
+                <?php $no = 1; ?>
+                <?php $kdgejala = $_POST['oke']; ?>
+                <?php foreach ($kdgejala as $tampil) { ?>
+                <tr>
+                  <td><?php echo $no++; ?></td>
+                  <td><?php echo $tampil; ?></td>
+                  <?php $query = mysqli_query($connection, "SELECT * FROM tbl_gejala WHERE kd_gejala = '$tampil'"); ?>
+                      <?php while($tampil1 = mysqli_fetch_array($query)){ ?>
+                  <td><?php echo $tampil1['nama_gejala']; ?></td>
+                  <?php } ?>
+                </tr>
+                <?php } ?>
+              </tbody>
             </table>
             </div>
 
             <br/>
             <div class="col-sm-7">
-            	<h6>Data Analisa :</h6><br/>
-            	<table class="table">
-            		<thead>
-            			<th>No</th>
-            			<!-- <th>Kode</th> -->
-            			<th>Nama Penyakit</th>
-            			<th>CF</th>
-            			<th>Rank</th>
-            		</thead>
+              <h6>Data Analisa :</h6><br/>
+              <table class="table">
+                <thead>
+                  <th>No</th>
+                  <!-- <th>Kode</th> -->
+                  <th>Nama Penyakit</th>
+                  <th>CF</th>
+                  <th>Rank</th>
+                </thead>
 
-            		<tbody>
-            			<?php $no = 1; ?>
-            			<?php $kdgejala = $_POST['oke']; ?>
-            			<?php foreach ($kdgejala as $tampil) { ?>
-            			<?php $query = mysqli_query($connection, "SELECT * FROM tbl_basispengetahuan WHERE kd_gejala = '$tampil' "); ?>
-                  		<?php while($tampil1 = mysqli_fetch_array($query)){ ?>
-            			<tr>
-            				<td><?php echo $no++; ?></td>
-            				<!-- <td>1001</td> -->
-            				<?php $query2 = mysqli_query($connection, "SELECT * FROM tbl_penyakit WHERE kd_penyakit = '$tampil1[1]'"); ?>
-                  			<?php while($tampil2 = mysqli_fetch_array($query2)){ ?>
-            				<td><?php echo $tampil2['nm_penyakit']; ?></td>
-            				<td><?php echo $tampil1['nilaimb']; ?></td>
-            				<?php } ?>
-            				<td>1</td>
-            			</tr>
-            			<?php } ?>
-            			<?php } ?>
-            		</tbody>
-            	</table>
-        	</div>
+                <tbody>
+                  <?php $no = 1; ?>
+                  <?php $rank = 1; ?>
+                  <?php $kdgejala = $_POST['oke']; ?>
+                  <?php foreach ($kdgejala as $tampil) { ?>
+                  <?php $query = mysqli_query($connection, "SELECT * FROM tbl_basispengetahuan WHERE kd_gejala = '$tampil' GROUP BY kd_penyakit ORDER BY nilaimb Desc"); ?>
+                  <?php while($tampil1 = mysqli_fetch_array($query)){ ?>
+                  
+                  <tr>
+                    <td><?php echo $no++; ?></td>
+
+
+                    <td><?php echo $tampil1['kd_penyakit']; ?></td>
+                    <td><?php echo $tampil1['nilaimb']; ?></td>
+                    
+
+                    <td><?php echo $rank++; ?></td>
+                  
+                  
+                  </tr>
+                  <?php } ?>
+                  <?php } ?>
+                </tbody>
+              </table>
+          </div>
 
           </section>
 
-    <! --/wrapper -->
+    <!--/wrapper -->
     </section><!-- /MAIN CONTENT -->
 
      
