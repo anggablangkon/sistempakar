@@ -5,7 +5,7 @@
 
 	$local 		= 'localhost';
 	$user		= 'root';
-	$pass 		= 'kokitindo';
+	$pass 		= '';
 	$database	= 'cecepapps';
 
 
